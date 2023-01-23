@@ -3,13 +3,13 @@
 This is a personal PostgreSQL project I created using all real NHL players and teams to create views on specific stats across the NHL. 
 
 ## Table of Contents
--[Installation](#installation) 
+[Installation](#installation) 
 
--[Usage](#usage) 
+[Usage](#usage) 
 
--[Contributors](#contributors) 
+[Contributors](#contributors) 
 
--[Mock-Up](#mockup)
+[Mock-Up](#mockup)
 
 ## Installation
 
