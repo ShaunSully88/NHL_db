@@ -70,6 +70,21 @@ FROM players
 
 SELECT * FROM highest_salary;
 
+-- Lowest 20 Salaries --
+
+DROP VIEW IF EXISTS lowest_salary;
+CREATE VIEW lowest_salary AS
+ SELECT players.player_id AS id,
+    players.first_name|| ' ' ||players.last_name AS "Name", 
+    teams.team_name AS "Team",
+    players.salary AS "Salary"
+FROM players 
+    INNER JOIN teams ON players.team_id=teams.team_id
+    ORDER BY salary ASC
+    LIMIT 20;
+
+SELECT * FROM lowest_salary;
+
 --Oldest 20 players--
 
 DROP VIEW IF EXISTS oldest_players;
@@ -110,6 +125,43 @@ CREATE VIEW nation_rep AS
     ORDER BY COUNT DESC;  
 
 SELECT * FROM nation_rep;
+
+
+-- Functions --
+DROP FUNCTION IF EXISTS fetch_player;
+CREATE FUNCTION fetch_player (search_player varchar(30))
+RETURNS CHAR(2)
+AS $$ 
+BEGIN 
+RETURN (SELECT player_id
+FROM players
+WHERE last_name = search_player);
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Procedures--
+
+-- Insert Player Procedure --
+
+CREATE PROCEDURE insert_player (
+    player_id INT,
+    first_name CHAR(15),
+    last_name CHAR(20),
+    age INTEGER,
+    shoots CHAR(1),
+    pos_id INTEGER,
+    salary INTEGER,
+    team_id INTEGER,
+    nation_id INTEGER
+)
+LANGUAGE SQL AS $$
+INSERT INTO players VALUES (player_id, first_name, last_name, age, shoots, pos_id, salary, team_id, nation_id);
+$$;
+
+--Call Function--
+CALL insert_player ();
+
 
 
 
